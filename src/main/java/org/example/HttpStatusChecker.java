@@ -12,7 +12,6 @@ public class HttpStatusChecker {
             throws URISyntaxException, IOException, InterruptedException, PageNotFoundException {
         HttpClient client = HttpClient.newHttpClient();
         String uri = "https://http.cat/" + code + ".jpg";
-        String result = "";
 
     HttpRequest request = HttpRequest.newBuilder()
             .uri(new URI(uri))
@@ -23,10 +22,8 @@ public class HttpStatusChecker {
                 client.send(request, HttpResponse.BodyHandlers.ofString());
 
         if (response.statusCode() == 404){
-            throw new PageNotFoundException("Сторінки з таким кодом не знайдено");
+            throw new PageNotFoundException("Page not found");
         }
-
-        result = response.toString().split(" ")[1].replace(")", "");
-        return result;
+        return uri;
     }
 }
